@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Account;
-use App\Models\Activation;
 use App\Models\Mode;
+use App\Models\Activation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
 {
@@ -46,8 +47,18 @@ class FrontendController extends Controller
 
     public function activer_account()
     {
+        $user = Auth::user();
         $modes = Mode::all();
-        return view('compte.activer')->with('modes',$modes);
+        $account = $this->my_account($user->username);
+        $exist = $this->account_exist($user->username);
+        $statut = $this->status($account);
+        return view('compte.activer')->with([
+            'modes'=>$modes,
+            'account'=>$account,
+            'exist'=>$exist,
+            'market'=>'',
+            'statut'=>$statut
+        ]);
     }
 
     public function getTransaction($codeRef,$numero_envoi)
@@ -73,10 +84,10 @@ class FrontendController extends Controller
     public function activation(Request $request)
     {
         //return response()->json(['message'=>"Données envoyées avec succès"],200);
-        
+
         $mode = $request->mode_id;
         /**
-         * methode de validation 
+         * methode de validation
          */
         if ($mode == 1 || $mode == 2) {
             $this->validate($request,[
@@ -107,9 +118,9 @@ class FrontendController extends Controller
                 'montant'=>'required',
             ]);
         }
-        
 
-        dd($request->all());
+
+        //dd($request->all());
 
 
         $codeRef = $request->codeRef;
@@ -127,7 +138,7 @@ class FrontendController extends Controller
         //dd($pseudo_cpte);
 
         if ($transact && $pseudo_cpte) {
-            
+
             $a = '';
             //update la table activation où le codeRef = $codeRef dont le codeRef='';
             $update = $this->updateCodeRef($request->codeRef,$a);
@@ -139,7 +150,7 @@ class FrontendController extends Controller
         } else {
             session()->flash('alert',"Compte en entente d'activation ou transaction pas encore enregistré, veuillez ressayez plus tard");
             return redirect()->back();
-        } 
+        }
         //dd($pseudo_cpte->pseudo_cpte);
     }
 

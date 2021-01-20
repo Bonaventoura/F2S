@@ -23,8 +23,9 @@
                 <thead class="bg-primary">
                     <tr>
                         <th style="width: 10px">#</th>
-                        <th>Nom</th>
-                        <th>Prenoms</th>
+                        <th>Nom & Prénoms </th>
+                        <th>Tel</th>
+                        <th>Email</th>
                         <th>Nom du Parrain</th>
                         <th>Date de parrainage</th>
                     </tr>
@@ -39,9 +40,10 @@
                                     {{$i++}}
                                 </td>
                                 <td>
-                                    <a href="{{ route('filleul', ['code'=>$filleul->code]) }}" class="text-dark">{{$filleul->nom}}</a>
+                                    {{$filleul->nom}} {{$filleul->prenoms}}
                                 </td>
-                                <td>{{$filleul->prenoms}}</td>
+                                <td>{{$filleul->num_tel}}</td>
+                                <td>{{$filleul->email}}</td>
                                 <td>{{$account->nom}}</td>
                                 <td>{{$filleul->created_at}}</td>
                             </tr>

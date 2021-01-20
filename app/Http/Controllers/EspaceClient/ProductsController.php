@@ -3,14 +3,19 @@
 namespace App\Http\Controllers\EspaceClient;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Client\Product;
 use App\Models\Client\Boutique;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
-use Auth;
 
 class ProductsController extends ClientController
 {
+
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -62,7 +67,7 @@ class ProductsController extends ClientController
 
             $img = Image::make(request()->file('photo_produit'))->fit(300,200)->save(public_path('/storage/produits/'.$filename),80,'jpg');
 
-           
+
             $nom = $request->nom_produit;
 
             //dd($request->all());

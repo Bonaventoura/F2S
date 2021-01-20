@@ -62,8 +62,6 @@ class BoutiqueController extends ClientController
      */
     public function store(Request $request)
     {
-
-
         $this->validate($request,[
             'nom_boutique'=>'required',
             'domaine'=>'required',

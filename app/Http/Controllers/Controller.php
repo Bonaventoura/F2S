@@ -621,4 +621,29 @@ class Controller extends BaseController
         }
     }
 
+    /**
+     * la méthode account_exist permet de vérifier l'existence d'un compte client
+     */
+    public function account_exist(string $username)
+    {
+        $result = Account::where('pseudo','=',$username)->first();
+
+        if ($result) {
+            return $msg=1;
+        } else {
+            return $msg =0;
+        }
+    }
+
+    public function status($account)
+    {
+        $result = Account::where('pseudo','=',$account)->where('actif','=',1)->first();
+
+        if ($result) {
+            return $msg=1;
+        } else {
+            return $msg =0;
+        }
+    }
+
 }

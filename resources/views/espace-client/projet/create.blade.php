@@ -10,12 +10,6 @@
           <h1 class="h3 mb-0 text-gray-800"> Back Office | Projet Personnel</h1>
         </div>
 
-        <!-- Content Row -->
-
-
-
-        <!-- Content Row -->
-
         <div class="row">
 
           <!-- Area Chart -->
@@ -36,7 +30,7 @@
                             @csrf
 
                             <div class="row">
-                                
+
                                     <div class="col-lg-4 col-xl-4">
                                         <h4>Informations Personnele</h4>
                                         <div class="card mb-4">
@@ -89,9 +83,6 @@
                                                     <strong><label for="plan_affaire">Charger le fichier du plan d'affaire</label></strong>
                                                     <input type="file" name="plan_affaire" id="plan_affaire" class="form-control">
                                                 </div>
-
-
-
                                             </div>
                                         </div>
 
@@ -109,7 +100,7 @@
 
                                                 <div class="form-group">
                                                     <strong><label for="cout_projet">A combien est évalué le coût globale de votre projet</label></strong>
-                                                <input type="number" name="cout_projet" id="cout_projet" value="{{old('cout_projet')}}" class="form-control" >
+                                                    <input type="number" name="cout_projet" id="cout_projet" value="{{old('cout_projet')}}" class="form-control" >
                                                 </div>
 
                                                 <div class="form-group">

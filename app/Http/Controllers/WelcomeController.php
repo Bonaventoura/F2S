@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Account;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class WelcomeController extends FrontendController
 {
@@ -23,6 +25,7 @@ class WelcomeController extends FrontendController
              */
             if ($username ==1) {
                 $account = $this->my_account($user->username);
+                //dd($account);
                 $id = $this->getID($user->username);
                 //dd($id);
                 $market = $this->marketID($id);
@@ -94,6 +97,38 @@ class WelcomeController extends FrontendController
         foreach ($accounts as $key => $account) {
             return $account->id;
         }
+    }
+
+    /**
+     * Retourne les identifiants de l'utilisateur
+     */
+    public function fetch_user(Request $request)
+    {
+        $username = $request->username;
+        $password = Hash::make($request->password);
+        //dd($password);
+        $data = [
+            'username'=>$username,
+            'password'=>$password
+        ];
+
+        $user = User::where('username',$username)->first();
+        //dd($user->password);
+
+        $response = [];
+        if ($user->password = $password) {
+            $response = [
+                'success'=>"Identifiants de connexion correcte",
+                'username'=>$username,
+                'password'=>$password
+            ];
+        } else {
+            $response = [
+                'error'=>"Identifiants de connexion incorrecte",
+            ];
+        }
+
+        return $response;
     }
 
 

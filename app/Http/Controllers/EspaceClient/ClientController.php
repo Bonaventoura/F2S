@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\EspaceClient;
 
+use App\Account;
+use App\Models\Clubs\Club;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Club;
 use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
@@ -29,17 +30,24 @@ class ClientController extends Controller
     {
         $user = $this->user();
         $lien ="http://localhost:8000/compte/create/". $this->get_lien($user);
-        return view('espace-client.index')->with([
+        return view('espace_client.index')->with([
             'user'=>$user,
             'lien'=>$lien
         ]);
     }
 
+    /**
+     * @return client
+     * la methode client_account retourne les informations d'un client
+     */
     public function client_account($account)
     {
-        return  $account = DB::table('accounts')->select('*')
-                    ->where('pseudo','=',$account)
-                    ->get();
+        $results = Account::select('*')->where('pseudo','=',$account)->get();
+
+        foreach ($results as $key => $value) {
+            return $value;
+        }
+
     }
 
     public function getId($account)
@@ -54,7 +62,7 @@ class ClientController extends Controller
     }
 
     /**
-     * la méthode market retourne toutes les infos concernant la boutique d'un client
+     * la méthode market retourne toutes les infos concernant la boutique d'un_client
      */
     public function market($account)
     {
@@ -64,7 +72,7 @@ class ClientController extends Controller
     }
 
     /**
-     * la methode marketID retourne l'id d'une boutique pour un client
+     * la methode marketID retourne l'id d'une boutique pour un_client
      */
     public function marketID($account)
     {
@@ -79,16 +87,16 @@ class ClientController extends Controller
 
 
     /**
-     * la méthode getProducts permet de retourner tous les produits d'une boutique appartenant à un client
+     * la méthode getProducts permet de retourner tous les produits d'une boutique appartenant à un_client
      */
     public function getProducts($account)
     {
         return $products = DB::table('boutique_product')
-            ->join('boutiques', 'boutique_product.boutique_id', '=', 'boutiques.id')
-            ->join('products', 'boutique_product.product_id', '=', 'products.id')
-            ->select('products.*', 'boutiques.nom_boutique')
-            ->where('boutiques.accounts_id','=',$account)
-            ->get();
+                        ->join('boutiques', 'boutique_product.boutique_id', '=', 'boutiques.id')
+                        ->join('products', 'boutique_product.product_id', '=', 'products.id')
+                        ->select('products.*', 'boutiques.nom_boutique')
+                        ->where('boutiques.accounts_id','=',$account)
+                        ->get();
     }
 
     /**
@@ -106,14 +114,40 @@ class ClientController extends Controller
     }
 
     /**
-     * la methode club retourne les membres du club du client
+     * la methode getClub retourne l'id du club dont le_client appartient
+     */
+    public function getClub($id)
+    {
+        $result = Club::all()->where('account_id','=',$id);
+
+        foreach ($result as $key => $value) {
+            return $value->id;
+        }
+
+    }
+
+    /**
+     * la methode club retourne les membres du club du_client
      */
     public function club(string $nom)
     {
         $user = $this->user();
+        //dd($user);
         $id = $this->getId($user);
-        $club = Club::all()->where('account_id','=',$id);
+        //dd($id);
+        $club_id = $this->getClub($id);
+        dd($club_id);
+        $club = Club::find($club_id);
+        //$nomClub = $club->groupe->nom;
         dd($club);
-        return view('espace-client.mon-club.index')->with(['user'=>$user]);
+
+        //$membres = DB::table('clubs')->select('*')->where('groupe_id','=',$club_id)->get();
+        $membres = Club::all()->where('groupe_id','=',$club_id)->paginate(25);
+        //dd($membres);
+        return view('espace_client.mon-club.index')->with([
+            'user'=>$user,
+            'membres'=>$membres,
+            'club'=>$club
+        ]);
     }
 }

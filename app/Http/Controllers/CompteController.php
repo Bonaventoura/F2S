@@ -103,13 +103,13 @@ class CompteController extends Controller
             $account->num_tel = $request->num_tel;
             $account->email = $request->email;
             $account->pseudo = $request->pseudo;
-            $account->password = $password;
+            $account->password = $request->password;
             $account->code = $code;
             $account->photo_profil = $photo_profil;
 
 
             /**
-             * le pseudo du parrain existe, donc c'est un parrainage 
+             * le pseudo du parrain existe, donc c'est un parrainage
              */
             if (isset($pseudo_parrain)) {
 
@@ -203,11 +203,11 @@ class CompteController extends Controller
                 $solde = new Solde;
 
                 $solde->account_id = $this->getLastId();;
- 
+
                 $solde->niveau_id = 1;
- 
+
                 $solde->montant_actuel = 0;
- 
+
                 //dd($solde);
 
                 $account->save();
@@ -324,11 +324,11 @@ class CompteController extends Controller
                 $solde = new Solde;
 
                 $solde->account_id = $this->getLastId();
- 
+
                 $solde->niveau_id = 1;
- 
+
                 $solde->montant_actuel = 0;
- 
+
                 //dd($solde);
 
                 $account->save();

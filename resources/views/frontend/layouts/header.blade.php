@@ -28,12 +28,7 @@
                         <div class="top_bar_content ml-auto">
                             <div class="main_menu_phone"><img src="{{ asset('images/phone-call.svg') }}" alt=""><span>+825 25 800 800</span></div>
                             <div class="main_menu_email"><img src="{{ asset('images/envelope.svg') }}" alt=""><span>office@invest.com</span></div>
-                            <div class="coins">
-                                <ul>
-                                    <li>BTC $10200</li>
-                                </ul>
-                            </div>
-
+                            
                         </div>
                         <div class="burger">
                             <i class="fa fa-bars" aria-hidden="true"></i>
@@ -92,7 +87,7 @@
                                 <div class="dropdown ml-lg-5">
                                     <span class="dropdown-toggle no-caret" data-toggle="dropdown">
                                         <img class="avatar avatar-xs img-rounded" src="{{ asset('images/admin.png') }}" width="20" height="40" alt="user">
-                                        <p class="text-white">{{$account}}</p>
+                                        <p class="text-white"> {{Auth::user()->name}} </p>
                                     </span>
                                     <div class="dropdown-menu dropdown-menu-right">
 

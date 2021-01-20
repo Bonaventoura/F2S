@@ -4,10 +4,10 @@ namespace App\Http\Controllers\EspaceClient;
 
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Client\Projet;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Auth;
 
 class ProjetsController extends ClientController
 {
@@ -18,9 +18,15 @@ class ProjetsController extends ClientController
      */
     public function index()
     {
-        $user = Auth::user()->username;
-        return view('espace-client.projet.index')->with([
+        $user = Auth::user();
+        //dd($user);
+        $account_id = $this->getId($user->username);
+        //dd($account_id);
+        $projets = Projet::where('account_id',$account_id)->get();
+        //dd($projets);
+        return view('espace_client.projets.index')->with([
             'user'=>$user,
+            'projets'=>$projets,
         ]);
     }
 
@@ -34,28 +40,12 @@ class ProjetsController extends ClientController
         $user = Auth::user()->username;
 
         $account = $this->client_account($user);
-
-        foreach ($account as $key => $value) {
-
-            $id = $value->id;
-            $nom = $value->nom;
-            $prenoms = $value->prenoms;
-            $sexe = $value->sexe;
-            $email = $value->email;
-            $num_tel = $value->num_tel;
-
-        }
-
+        //dd($account);
         //dd($email);
-        return view('espace-client.projet.create')->with([
+        return view('espace_client.projets.create')->with([
             'user'=>$user,
             'account'=>$account,
-            'id'=>$id,
-            'nom'=>$nom,
-            'prenoms'=>$prenoms,
-            'sexe'=>$sexe,
-            'email'=>$email,
-            'num_tel'=>$num_tel
+
         ]);
     }
 
@@ -74,6 +64,7 @@ class ProjetsController extends ClientController
             'description'=>'required|max:150',
             'domaine'=>'required',
             'plan_affaire'=>'required',
+            'nom_projet'=>'required'
         ]);
 
 
@@ -83,11 +74,11 @@ class ProjetsController extends ClientController
             $plan_affaire = $request->plan_affaire->getClientOriginalName();
 
             //dd($plan_affaire);
-
             $request->plan_affaire->storeAs('public/docs',$plan_affaire);
 
             $data = array(
-                'accounts_id'=>$request->accounts_id,
+                'account_id'=>$request->account_id,
+                'nom_projet'=>$request->nom_projet,
                 'sm'=>$request->sm,
                 'description'=>$request->description,
                 'cout_projet'=>$request->cout_projet,
@@ -95,23 +86,21 @@ class ProjetsController extends ClientController
                 'nature_projet'=>$request->nature_projet,
                 'domaine'=>$request->domaine,
                 'actualite'=>$request->actualité,
+                'nature_projet'=>'',
                 'type_remboursement'=>$request->type_remboursement,
                 'taille_entreprise'=>$request->taille_entreprise,
-                'plan_affaire'=>$plan_affaire
+                'plan_affaire'=>$plan_affaire,
+                'duree_projet'=>$request->duree_projet
             );
 
-           /* dd($data);
-            Projet::create($data); */
+            //dd($data);
+            Projet::create($data);
 
             session()->flash('success',"Le projet a été ajouté avec succès");
 
             return redirect()->route('projets.index');
 
         }
-
-
-
-
 
     }
 
@@ -121,9 +110,15 @@ class ProjetsController extends ClientController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Projet $projet)
     {
-        //
+        $user = Auth::user();
+        $account = $this->client_account($user->username);
+        return view('espace_client.projets.show')->with([
+            'user'=>$user,
+            'projet'=>$projet,
+            'account'=>$account
+        ]);
     }
 
     /**

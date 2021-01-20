@@ -24,6 +24,8 @@ Route::get('/', function () {
 
 Route::get('/','WelcomeController@index')->name('welcome');
 
+Route::post('/fetch-user','WelcomeController@fetch_user')->name('fetch-user');
+
 Route::resource('compte', 'CompteController');
 
 Route::get('foire','FoireController@index')->name('foire.online');
@@ -99,7 +101,6 @@ Route::post('/upload', function () {
 
 Route::get('compte/create/{lien}','CompteController@create');
 
-Route::get('exemple','ExempleController@index')->name('exemple');
 
 Route::get('activer','FrontendController@activer_account')->name('activer.account');
 
@@ -147,9 +148,12 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::post('/clubs/create','AdminController@create_club')->name('clubs.create');
 
-        Route::resource('clubs','ClubsControler');
-
+        Route::namespace('Clubs')->group(function() {
+            Route::resource('clubs','ClubsControler');
+            Route::resource('projects', 'ProjectController');
+        });
     });
+
 
 });
 

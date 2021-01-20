@@ -24,11 +24,11 @@
                             <div class="text-center">
                                 <img class="profile-user-img img-fluid img-circle" src="/storage/profil/{{$account->photo_profil}}" alt="User profile">
                             </div>
-        
+
                             <h3 class="profile-username text-center">{{$account->nom}}  {{$account->prenoms}}</h3>
-            
+
                             <p class="text-muted text-center">Compte Client</p>
-            
+
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
                                 <b>Niveau</b> <a class="float-right">{{$niveau}}</a>
@@ -37,16 +37,19 @@
                                 <b>Filleuls</b> <a class="float-right">{{$nbresF}}</a>
                                 </li>
                                 <li class="list-group-item">
-                                <b>Solde</b> <a class="float-right">13,287</a>
+                                <b>Cumul réseau</b> <a class="float-right">{{$nbresF *20000}}FCFA</a>
+                                </li>
+                                <li class="list-group-item">
+                                <b>Solde</b> <a class="float-right"></a> FCFA
                                 </li>
                             </ul>
-            
+
                             <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
                         </div>
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
-        
+
                     <!-- About Me Box -->
                     <div class="card card-primary">
                         <div class="card-header">
@@ -92,12 +95,12 @@
                                     <!-- timeline item -->
                                     <div>
                                     <i class="fas fa-envelope bg-primary"></i>
-            
+
                                     <div class="timeline-item">
                                         <span class="time"><i class="far fa-clock"></i> 12:05</span>
-            
+
                                         <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-            
+
                                         <div class="timeline-body">
                                         Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
                                         weebly ning heekya handango imeem plugg dopplr jibjab, movity
@@ -114,10 +117,10 @@
                                     <!-- timeline item -->
                                     <div>
                                     <i class="fas fa-user bg-info"></i>
-            
+
                                     <div class="timeline-item">
                                         <span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
-            
+
                                         <h3 class="timeline-header border-0"><a href="#">Sarah Young</a> accepted your friend request
                                         </h3>
                                     </div>
@@ -126,12 +129,12 @@
                                     <!-- timeline item -->
                                     <div>
                                     <i class="fas fa-comments bg-warning"></i>
-            
+
                                     <div class="timeline-item">
                                         <span class="time"><i class="far fa-clock"></i> 27 mins ago</span>
-            
+
                                         <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-            
+
                                         <div class="timeline-body">
                                         Take me to your leader!
                                         Switzerland is small and neutral!
@@ -153,12 +156,12 @@
                                     <!-- timeline item -->
                                     <div>
                                     <i class="fas fa-camera bg-purple"></i>
-            
+
                                     <div class="timeline-item">
                                         <span class="time"><i class="far fa-clock"></i> 2 days ago</span>
-            
+
                                         <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-            
+
                                         <div class="timeline-body">
                                         <img src="http://placehold.it/150x100" alt="...">
                                         <img src="http://placehold.it/150x100" alt="...">
@@ -174,7 +177,7 @@
                                 </div>
                             </div>
                             <!-- /.tab-pane -->
-        
+
                             <div class="tab-pane" id="settings">
                                 <form class="form-horizontal">
                                     <div class="form-group row">

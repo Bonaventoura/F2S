@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\EspaceAdmin;
 
-use App\Models\Groupe;
+use App\Models\Clubs\Groupe;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Projet extends Model
 {
     protected $fillable = [
-        'accounts_id',
+        'account_id',
+        'nom_projet',
         'sm',
         'description',
         'cout_projet',
@@ -19,11 +20,12 @@ class Projet extends Model
         'type_remboursement',
         'taille_entreprise',
         'plan_affaire',
-        'financer'
+        'financer',
+        'duree_projet'
     ];
 
     public function account()
     {
-        return $this->belongsTo(Account::class,'accounts_id');
+        return $this->belongsTo(Account::class,'account_id');
     }
 }

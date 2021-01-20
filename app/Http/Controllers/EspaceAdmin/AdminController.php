@@ -5,7 +5,8 @@ namespace App\Http\Controllers\EspaceAdmin;
 use App\Account;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Groupe;
+use App\Models\Clubs\Club;
+use App\Models\Clubs\Groupe;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller

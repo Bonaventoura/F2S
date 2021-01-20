@@ -5,7 +5,7 @@
                 <div class="row align-items-center">
                     <div class="col-xl-5 col-md-5 ">
                         <div class="header_left">
-                            
+
                             <b>
                                 <?php
 
@@ -31,7 +31,7 @@
                     <div class="col-xl-3 col-lg-3">
                         <div class="logo">
                             <a href="index.html">
-                                <img src="images/logo_f2s.png" width="100" alt="">
+                                <img src="{{ asset('images/logo_f2s.png') }}" width="100" alt="">
                             </a>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                         <div class="address_menu d-flex justify-content-end">
                             <div class="single_address  d-flex">
                                 <div class="icon">
-                                    <img src="img/icon/header-address.svg" alt="">
+                                    <img src="{{ asset('img/icon/header-address.svg') }}" alt="">
                                 </div>
                                 <div class="address_info">
                                     <h3>Address</h3>
@@ -48,7 +48,7 @@
                             </div>
                             <div class="single_address d-flex">
                                 <div class="icon">
-                                    <img src="img/icon/headset.svg" alt="">
+                                    <img src="{{ asset('img/icon/headset.svg') }}" alt="">
                                 </div>
                                 <div class="address_info">
                                     <h3>Call Us</h3>
@@ -67,7 +67,7 @@
                         <div class="col-12 d-lg-none">
                             <div class="logo ">
                                 <a href="#">
-                                    <img src="images/logo_f2s.png" alt="">
+                                    <img src="{{ asset('images/logo_f2s.png') }}" alt="">
                                 </a>
                             </div>
                         </div>
@@ -99,6 +99,7 @@
                                 </nav>
                             </div>
                         </div>
+
                         <div class="col-xl-4 col-lg-4 d-none d-lg-block">
                             <div class="Appointment d-flex justify-content-end">
 
@@ -157,6 +158,7 @@
                             </div>
 
                         </div>
+
                         <div class="col-12">
                             <div class="mobile_menu d-block d-lg-none">
                             </div>
