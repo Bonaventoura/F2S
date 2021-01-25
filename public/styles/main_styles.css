@@ -119,11 +119,11 @@ p a:hover::after
 }
 ::selection
 {
-	
+
 }
 p::selection
 {
-	
+
 }
 h1{font-size: 40px;}
 h2{font-size: 36px;}
@@ -137,14 +137,14 @@ h1, h2, h3, h4, h5, h6
 	-webkit-text-shadow: rgba(0,0,0,.01) 0 0 1px;
 	text-shadow: rgba(0,0,0,.01) 0 0 1px;
 }
-h1::selection, 
-h2::selection, 
-h3::selection, 
-h4::selection, 
-h5::selection, 
+h1::selection,
+h2::selection,
+h3::selection,
+h4::selection,
+h5::selection,
 h6::selection
 {
-	
+
 }
 .form-control
 {
@@ -606,7 +606,7 @@ section
 .main_menu
 {
 	width: 100%;
-	background: #ffa800;
+	background: #b3a07a;
 }
 .main_menu_container
 {
@@ -830,9 +830,9 @@ section
 	font-size: 12px !important;
 	font-style: italic;
 	color: rgba(255, 255, 255, 0.5) !important;
-} 
+}
 .search_input:-ms-input-placeholder
-{ 
+{
 	font-size: 12px !important;
 	font-style: italic;
 	color: rgba(255, 255, 255, 0.5) !important;
@@ -1257,9 +1257,9 @@ section
 	font-size: 18px !important;
 	font-weight: 600 !important;
 	color: #FFFFFF !important;
-} 
+}
 .converter_input:-ms-input-placeholder
-{ 
+{
 	font-size: 18px !important;
 	font-weight: 600 !important;
 	color: #FFFFFF !important;
@@ -1583,9 +1583,9 @@ section
 	font-size: 11px !important;
 	font-style: italic;
 	color: #c2cbd7 !important;
-} 
+}
 .footer_newsletter_input:-ms-input-placeholder
-{ 
+{
 	font-size: 11px !important;
 	font-style: italic;
 	color: #c2cbd7 !important;

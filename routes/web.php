@@ -123,6 +123,14 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/mon-club/{nom}','ClientController@club')->name('mon-club');
 
+        Route::post('/projet/carneva','ClientController@upload_file')->name('carneva.upload');
+
+        Route::get('/projet/carneva/dowload','ClientController@telecharger')->name('carneva.download');
+
+        Route::post('/projet/confirmation','ClientController@confirmation')->name('confirmation');
+
+
+
     });
 });
 

@@ -5,9 +5,14 @@ namespace App\Http\Controllers\EspaceClient;
 use App\Account;
 use App\Models\Clubs\Club;
 use Illuminate\Http\Request;
+use App\Models\Client\Projet;
+use App\Models\Client\Carneva;
+use App\Models\Client\Boutique;
 use Illuminate\Support\Facades\DB;
+use App\Models\Client\Confirmation;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 
 class ClientController extends Controller
 {
@@ -66,9 +71,7 @@ class ClientController extends Controller
      */
     public function market($account)
     {
-        return $results = DB::table('boutiques')->select('*')
-                    ->where('accounts_id','=',$account)
-                    ->get();
+        return $results = Boutique::where('account_id','=',$account)->get();
     }
 
     /**
@@ -95,7 +98,7 @@ class ClientController extends Controller
                         ->join('boutiques', 'boutique_product.boutique_id', '=', 'boutiques.id')
                         ->join('products', 'boutique_product.product_id', '=', 'products.id')
                         ->select('products.*', 'boutiques.nom_boutique')
-                        ->where('boutiques.accounts_id','=',$account)
+                        ->where('boutiques.account_id','=',$account)
                         ->get();
     }
 
@@ -150,4 +153,76 @@ class ClientController extends Controller
             'club'=>$club
         ]);
     }
+
+    public function upload_file(Request $request)
+    {
+        if ($request->hasFile('calendrier')) {
+            $calendrier = $request->calendrier->getClientOriginalName();
+            //dd($calendrier);
+            $request->calendrier->storeAs(public_path('/storage/carneva/'.$calendrier));
+
+            $data = [
+                'projet_id'=>$request->projet_id,
+                'calendrier'=>$calendrier
+            ];
+
+            Carneva::create($data);
+
+            $response = ['success'=>"votre carneva a été uploader avec succès"];
+        }
+
+        return response()->json($response,200);
+    }
+
+    public function telecharger()
+    {
+        $file = public_path().'/files/carneva-fr.xls';
+        //dd($file);
+        $headers = [
+            'Content-Type: application/xls',
+        ];
+
+        $name = "carneva-fr.xls";
+
+        return response()->download($file, $name, $headers);
+    }
+
+    public function confirmation(Request $request)
+    {
+        $response = [];
+        if ($request->hasFile('calendrier')) {
+            $calendrier = $request->calendrier->getClientOriginalName();
+            //dd($calendrier);
+            $request->calendrier->storeAs(public_path('/storage/calendrier/'.$calendrier));
+
+            $data = [
+                'projet_id'=>$request->projet_id,
+                'nom_parrain'=>$request->nom_parrain,
+                'prenoms_parrain'=>$request->prenoms_parrain,
+                'fonction'=>$request->fonction,
+                'email_address'=>$request->eamil_address,
+                'telephone'=>$request->telephone,
+                'calendrier'=>$calendrier
+            ];
+
+            Confirmation::create($data);
+
+            $this->update_projet($request->projet_id);
+
+            $response = ['success'=>"votre confirmation du projet a été envoyé avec succès"];
+        }else {
+            $response = ['error'=>"Echec d'envoie de la confirmation"];
+        }
+
+        return response()->json($response,200);
+
+    }
+
+    public function update_projet($projet_id)
+    {
+        $up = Projet::where('id','=',$projet_id)->update(['confirm_at'=>1]);
+        return $up;
+    }
+
+
 }

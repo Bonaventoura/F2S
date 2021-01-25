@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Boutique extends Model
 {
     protected $fillable = [
-        'accounts_id',
+        'account_id',
         'nom_boutique',
         'domaine_activite',
         'pays',
@@ -31,5 +31,5 @@ class Boutique extends Model
         return $this->belongsToMany(Product::class)->withTimestamps();
     }
 
-    
+
 }

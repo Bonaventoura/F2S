@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Client\Boutique;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Intervention\Image\Facades\Image;
-use Auth;
+use Illuminate\Support\Facades\Auth as Auth;
 
 class BoutiqueController extends ClientController
 {
@@ -22,21 +22,25 @@ class BoutiqueController extends ClientController
      */
     public function index()
     {
-        $user = Auth::user()->username;
-        $account_id = $this->getId($user);
+        $user = Auth::user();
+        $account_id = $this->getId($user->username);
         //dd($account_id);
 
         $boutiques = $this->market($account_id);
+        //dd($boutiques);
 
-        $products = $this->getProducts($account_id);
+        if ($boutiques->count() !==0 ) {
 
-        //dd($products);
+            $products = $this->getProducts($account_id);
+            return view('espace_client.market.index')->with([
+                'user'=>$user,
+                'boutiques'=>$boutiques,
+                'products'=>$products,
+            ]);
+        } else {
+            return redirect()->route('boutiques.create');
+        }
 
-        return view('boutique.index')->with([
-            'user'=>$user,
-            'boutiques'=>$boutiques,
-            'products'=>$products,
-        ]);
     }
 
     /**
@@ -46,11 +50,11 @@ class BoutiqueController extends ClientController
      */
     public function create()
     {
-        $user = Auth::user()->username;
-
-        $account = $this->my_account($user);
-        return view('boutique.creer')->with([
-            'pseudo'=>$account,
+        $user = Auth::user();
+        $account_id = $this->getId($user->username);
+        //dd($account_id);
+        return view('espace_client.market.create')->with([
+            'account_id'=>$account_id,
         ]);
     }
 
@@ -82,13 +86,13 @@ class BoutiqueController extends ClientController
 
             //$request->avatar->storeAs('public/avatars',$avatar);
 
-            $account_id = $this->getId($request->pseudo);
+            $account_id = $this->getId($request->acc);
 
             //dd($account_id);
             $nom = $request->nom_boutique;
 
             $data = [
-                'accounts_id'=>$account_id,
+                'account_id'=>$request->account_id,
                 'nom_boutique'=>$request->nom_boutique,
                 'domaine_activite'=>$request->domaine,
                 'pays'=>$request->pays,
@@ -104,8 +108,8 @@ class BoutiqueController extends ClientController
 
             Boutique::create($data);
 
-            session()->flash('success',"La boutique $nom a été créer avec succès");
-            return redirect()->back();
+            session()->flash('success',"La espace_client.market $nom a été créer avec succès");
+            return redirect()->route('boutiques.index');
         }
 
 

@@ -28,7 +28,7 @@
                         <div class="top_bar_content ml-auto">
                             <div class="main_menu_phone"><img src="{{ asset('images/phone-call.svg') }}" alt=""><span>+825 25 800 800</span></div>
                             <div class="main_menu_email"><img src="{{ asset('images/envelope.svg') }}" alt=""><span>office@invest.com</span></div>
-                            
+
                         </div>
                         <div class="burger">
                             <i class="fa fa-bars" aria-hidden="true"></i>
@@ -47,16 +47,16 @@
                     <div class="main_menu_container d-flex flex-row align-items-center justify-content-start">
                         <div class="main_menu_content">
                             <ul class="main_menu_list">
-                                <li class="active hassubs"><a href="#">Accueil</a></li>
+                                <li class="active hassubs"><a href="{{ route('welcome') }}">Accueil</a></li>
                                 <li><a href="about.html">A Propos </a></li>
                                 <li class="hassubs"><a href="services.html">services</a></li>
-                                <li class="hassubs"><a href="services.html">portfolio</a></li>
+                                <li><a class="" href="{{ route('foire.online') }}">Foire </a></li>
+                                <li><a class="" href="{{ route('shopping') }}">E-Shop </a></li>
                                 <li><a href="news.html">blog</a></li>
                                 <li><a href="contact.html">contact</a></li>
                             </ul>
                         </div>
                         <div class="main_menu_contact ml-auto">
-
 
                         </div>
 
@@ -144,7 +144,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col">
-                            <a href="#">home</a>
+                            <a href="#">Accueil</a>
                         </div>
                     </div>
                 </div>
@@ -153,7 +153,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col">
-                            <a href="about.html">about us</a>
+                            <a href="about.html">A propos</a>
                         </div>
                     </div>
                 </div>
