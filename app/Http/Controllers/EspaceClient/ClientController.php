@@ -79,10 +79,8 @@ class ClientController extends Controller
      */
     public function marketID($account)
     {
-        $results = DB::table('boutiques')->select('id')
-                    ->where('accounts_id','=',$account)
-                    ->get();
-
+        $results = $this->market($account);
+        //dd($results);
         foreach ($results as $key => $value) {
             return $value->id;
         }

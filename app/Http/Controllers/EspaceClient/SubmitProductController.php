@@ -5,7 +5,7 @@ namespace App\Http\Controllers\EspaceClient;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Client\SubmitProduct;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class SubmitProductController extends ClientController
 {
@@ -53,7 +53,6 @@ class SubmitProductController extends ClientController
             'boutique_id'=>'required',
             'product_id'=>'required',
             'quantite_stock'=>'required|int',
-            'description'=>'required|string',
         ]);
 
         $data = [

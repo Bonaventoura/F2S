@@ -23,7 +23,7 @@ class Boutique extends Model
 
     public function account()
     {
-        return $this->belongsTo(Account::class,'accounts_id');
+        return $this->belongsTo(Account::class,'account_id');
     }
 
     public function products()

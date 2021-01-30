@@ -93,9 +93,9 @@
 
                                         @if ($exist == 1)
                                         <a class="dropdown-item" href="{{ route('espace.client') }}">Dashbord</a>
-                                        @if ($market ==0)
+                                        {{--@if ($market ==0)
                                         <a class="dropdown-item" href="{{ route('boutiques.create') }}">Créer Boutique</a>
-                                        @endif
+                                        @endif--}}
 
                                         {{--Afficher activer compte si le compte est inactif sinon ne rien afficher --}}
 

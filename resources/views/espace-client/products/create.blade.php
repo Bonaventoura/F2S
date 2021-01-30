@@ -60,7 +60,7 @@
 
                                                     <div class="form-group">
                                                         <strong><label for="domaine_usage">Domaine d'usage du Produit</label></strong>
-                                                    <input type="text" name="domaine_usage" id="domaine_usage" @error('domaine_usage') is-invalid @enderror" value="{{old('domaine_usage')}}" class="form-control form-control-sm">
+                                                        <input type="text" name="domaine_usage" id="domaine_usage" @error('domaine_usage') is-invalid @enderror" value="{{old('domaine_usage')}}" class="form-control form-control-sm">
 
                                                         @error('domaine_usage')
                                                             <span class="invalid-feedback" role="alert">

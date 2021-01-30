@@ -26,7 +26,7 @@ class BoutiqueController extends ClientController
         $account_id = $this->getId($user->username);
         //dd($account_id);
 
-        $boutiques = $this->market($account_id);
+        $boutiques = Boutique::where('account_id','=',$account_id)->first();
         //dd($boutiques);
 
         if ($boutiques->count() !==0 ) {
@@ -34,7 +34,7 @@ class BoutiqueController extends ClientController
             $products = $this->getProducts($account_id);
             return view('espace_client.market.index')->with([
                 'user'=>$user,
-                'boutiques'=>$boutiques,
+                'market'=>$boutiques,
                 'products'=>$products,
             ]);
         } else {

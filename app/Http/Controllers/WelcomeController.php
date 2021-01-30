@@ -9,15 +9,15 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class WelcomeController extends FrontendController
+class WelcomeController extends Controller
 {
+
     public function index()
     {
         // si le visiteur se connecte
         if (Auth::user()) {
 
             $user = Auth::user();
-
             $username = $this->account_exist($user->username);
             //dd($username);
             /**
@@ -28,7 +28,7 @@ class WelcomeController extends FrontendController
                 //dd($account);
                 $id = $this->getID($user->username);
                 //dd($id);
-                $market = $this->marketID($id);
+                //$market = $this->marketID($id);
                 //dd($market);
                 $satut = $this->status($account);
                 $profil = $this->profile($account);
@@ -36,7 +36,7 @@ class WelcomeController extends FrontendController
                     'account'=>$account,
                     'statut'=>$satut,
                     'profil'=>$profil,
-                    'market'=>$market,
+                    //'market'=>$market,
                     'exist'=>$username
                 ]);
             } else {
@@ -52,6 +52,27 @@ class WelcomeController extends FrontendController
             return view('frontend.index');
         }
 
+    }
+
+    /**
+     * @return data
+     */
+    public function user_data()
+    {
+        $user = Auth::user();
+        $username = $this->account_exist($user->username);
+        $account = $this->my_account($user->username);
+        $id = $this->getID($user->username);
+        $satut = $this->status($account);
+        $profil = $this->profile($account);
+
+        return $data = [
+            'user'=>$user,
+            'account'=>$account,
+            'statut'=>$satut,
+            'profil'=>$profil,
+            'exist'=>$username
+        ];
     }
 
     public function profile($account)

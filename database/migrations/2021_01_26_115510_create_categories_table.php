@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddConfirmAtToProjetTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddConfirmAtToProjetTable extends Migration
      */
     public function up()
     {
-        Schema::table('projet', function (Blueprint $table) {
-            $table->boolean('confirm_at')->default(0);
+        Schema::create('categories', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name')->unique();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class AddConfirmAtToProjetTable extends Migration
      */
     public function down()
     {
-        Schema::table('projet', function (Blueprint $table) {
-            $table->dropColumn('confirm_at');
-        });
+        Schema::dropIfExists('categories');
     }
 }
