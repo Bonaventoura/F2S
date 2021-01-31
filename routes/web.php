@@ -151,13 +151,14 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::resource('groupes', 'GroupesControler');
 
-
         Route::get('/clubs/critere','AdminController@critere')->name('clubs.critere');
 
         Route::post('/clubs/create','AdminController@create_club')->name('clubs.create');
 
         Route::namespace('Clubs')->group(function() {
+
             Route::resource('clubs','ClubsControler');
+
             Route::resource('projects', 'ProjectController');
         });
     });

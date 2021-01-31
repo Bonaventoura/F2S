@@ -51,28 +51,35 @@
                                 <li><a href="about.html">A Propos </a></li>
                                 <li class="hassubs"><a href="services.html">services</a></li>
                                 <li><a class="" href="{{ route('foire.online') }}">Foire </a></li>
-                                <li><a class="" href="{{ route('shopping') }}">E-Shop </a></li>
+                                <li><a class="" href="{{ route('shopping') }}">Projets </a></li>
                                 <li><a href="news.html">blog</a></li>
                                 <li><a href="contact.html">contact</a></li>
                             </ul>
                         </div>
                         <div class="main_menu_contact ml-auto">
+                            @if (\Cart::getTotalQuantity() > 0)
+                            <div class="dropdown ml-lg-7 " >
+                                <span class="badge badge-number badge-danger " data-toggle="dropdown">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    {{ \Cart::getTotalQuantity()}}</span>
+                                <div class="dropdown-menu dropdown-menu-right list-style-none" style="width: 450px; padding: 0px; border-color: #9DA0A2">
+                                    @include('frontend.foire.cart-drop')
+                                </div>
+                            </div>
+                            @endif
 
                         </div>
 
-                        <div class="register_login ml-1">
-                            {{--}}
-                            <div class="register"><a href="#">register</a></div>
-                            <div class="login"><a href="#">login</a></div> --}}
+                        <div class="register_login ml-1 text-white">
+
                             @guest
 
-                                <div class="login">
+                                <div class="login ">
                                     <a href="{{ route('login') }}" class="btn btn-xs btn-primary">
                                         <span class="fa fa-user"></span>Login
                                     </a>
                                 </div>
-                                &nbsp;&nbsp;&nbsp;
-
+                                
                                 @if (Route::has('register'))
                                     <div class="register">
                                         <a href="{{ route('compte.create') }}" class="btn btn-xs btn-success">

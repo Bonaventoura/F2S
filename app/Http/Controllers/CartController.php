@@ -12,9 +12,15 @@ class CartController extends Controller
     {
         $items =  \Cart::getContent();
 
-        return view('e-commerce.cart')->with([
-            'items'=>$items,
-        ]);
+        if ($items->count() > 0) {
+            return view('frontend.foire.cart')->with([
+                'items'=>$items,
+            ]);
+        } else {
+            return redirect()->back();
+        }
+
+
     }
 
     public function add(Request $request)
@@ -54,7 +60,7 @@ class CartController extends Controller
                         'value'=>$request->quantity
                     ),
                 ));
-        
+
         session()->flash('success',"la quantité du produit a été mise à jour avec réussite");
         return redirect()->back();
     }
