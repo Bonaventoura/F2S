@@ -10,9 +10,7 @@
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
-    <!-- IonIcons -->
-    {{--<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">--}}
-    <!-- Theme style -->
+    <link href="{{ asset('styles/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
 
     <!-- DataTables -->
@@ -71,7 +69,7 @@
 
         <!-- jQuery-->
         <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-        
+
         <!-- Bootstrap -->
         <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <!-- AdminLTE -->
@@ -84,6 +82,7 @@
         <!-- DataTables -->
         <script src="{{ asset('plugins/datatables/jquery.dataTables.js') }}"></script>
         <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.bundle.min.js') }}" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
         <!-- AdminLTE for demo purposes -->
         <script src="{{ asset('dist/js/demo.js') }}"></script>
@@ -92,7 +91,7 @@
         $(function () {
             $("#example1").DataTable({
             "paging": true,
-            "lengthChange": false,
+            "lengthChange": true,
             "searching": true,
             "ordering": true,
             "info": true,
@@ -100,8 +99,8 @@
             });
             $('#example2').DataTable({
             "paging": true,
-            "lengthChange": false,
-            "searching": false,
+            "lengthChange": true,
+            "searching": true,
             "ordering": true,
             "info": true,
             "autoWidth": true,
@@ -109,7 +108,7 @@
         });
         </script>
 
-        
+
 
     </body>
 </html>

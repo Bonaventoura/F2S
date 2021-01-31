@@ -161,6 +161,14 @@ Route::group(['middleware' => ['auth']], function () {
 
             Route::resource('projects', 'ProjectController');
         });
+
+        Route::namespace('Clients')->group(function(){
+
+            Route::get('/clients/projets/validation','ValidationController@index')->name('validations.projets');
+
+            Route::get('/clients/projets/validation/detail-projet/{projet}','ValidationController@detail_projet')->name('validations.detail-projet');
+
+        });
     });
 
 
