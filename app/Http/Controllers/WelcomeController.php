@@ -152,5 +152,10 @@ class WelcomeController extends Controller
         return $response;
     }
 
+    public function services()
+    {
+        return view('frontend.services.index');
+    }
+
 
 }

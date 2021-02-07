@@ -28,9 +28,30 @@ Route::post('/fetch-user','WelcomeController@fetch_user')->name('fetch-user');
 
 Route::resource('compte', 'CompteController');
 
+Route::get('/services','WelcomeController@services')->name('services');
+
 Route::get('foire','FoireController@index')->name('foire.online');
 
-Route::get('foire/show/{boutique}','FoireController@show')->name('foire.show');
+Route::get('foire/boutique/{boutique}','FoireController@show')->name('foire.show');
+
+Route::get('foire/recherche','FoireController@search')->name('foire.search');
+
+Route::get('foire/cart','CartController@cart')->name('cart');
+
+Route::post('/add','CartController@add')->name('cart.add');
+
+Route::post('/update', 'CartController@update')->name('cart.update');
+
+Route::post('/remove', 'CartController@remove')->name('cart.remove');
+
+Route::post('/clear', 'CartController@clear')->name('cart.clear');
+
+//Route::get('foire/checkout','FoireController@checkout')->name('foire.checkout');
+
+Route::get('foire/commande','CheckoutController@index')->name('foire.checkout');
+
+Route::post('foire/register','FoireController@register')->name('foire.register');
+
 
 //Ecommerce
 
@@ -41,15 +62,9 @@ Route::get('/form', function () {
     return view('e-commerce.form')->with(['products'=>$products]);
 })->name('form');
 
-Route::post('/add','CartController@add')->name('cart.add');
 
-Route::get('/cart','CartController@cart')->name('cart');
 
-Route::post('/update', 'CartController@update')->name('cart.update');
-Route::post('/remove', 'CartController@remove')->name('cart.remove');
-Route::post('/clear', 'CartController@clear')->name('cart.clear');
 
-Route::get('/checkout','CheckoutController@index')->name('cart.checkout');
 
 
 

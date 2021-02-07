@@ -2,29 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Cart;
-use Stripe\PaymentIntent;
-use Stripe\Stripe;
+use Darryldecode\Cart\Cart;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
+
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
+
     public function index()
     {
-        \Stripe\Stripe::setApiKey("sk_test_R476t81gNNlcVrcIyDTEfZCn00DMVepirC");
+        $items = \Cart::getContent();
 
-        $intent = PaymentIntent::create([
-            'amount'=>\Cart::getTotal(),
-            'currency'=> 'eur'
-        ]);
+        $user = Auth::user();
 
-        $clientSecret = Arr::get($intent,'client_secret');
-
-        $items =  \Cart::getContent();
-        return view('e-commerce.checkout')->with([
-            'items'=>$items,
-            'clientSecret'=>$clientSecret,
-        ]);
+        if ($items->count() > 0) {
+            return view('frontend.foire.checkout')->with([
+                'items'=>$items,
+                'user'=>$user,
+            ]);
+        } else {
+            return redirect()->route('foire.online');
+        }
     }
 }

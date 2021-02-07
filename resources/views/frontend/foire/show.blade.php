@@ -21,10 +21,11 @@
                     <h2 class="text-center text-dark mb-4" >
                         Découvrez en détail les articles de la boutique {{$market->nom_boutique}}
                     </h2>
-                    <div class="col-lg-6 pull-right">
-                        <form action="">
+                    <div class="col-lg-12 pull-center">
+                        <form action="{{ route('foire.search') }}" method="GET">
+                            @csrf
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholders="Entrez pour rechercher une boutique" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <input type="text" name="search" id="search" class="form-control" placeholder="Entrez pour rechercher un produit ou une boutique" aria-label="Entrez pour rechercher un produit ou une boutique" aria-describedby="button-addon2">
                                 <button class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="fa fa-search"></i></button>
                             </div>
                         </form>
@@ -160,15 +161,19 @@
                             </div>
                         </div>
                         <div class="tab-pane fade mt-4 mb-4" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-
-                            @foreach ($boutiques as $market)
-                            <div class="card shadow-lg text-center" style="width: 12rem;">
-                                <img src="/storage/avatars/{{$market->avatar}}" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <a href="{{ route('foire.show',['boutique'=>$market->nom_boutique]) }}" class="btn btn-xs btn-danger">Visitez la boutique</a>
+                            <div class="row">
+                                @foreach ($boutiques as $market)
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                    <div class="card shadow-lg text-center" style="width: 12rem;">
+                                        <img src="/storage/avatars/{{$market->avatar}}" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <a href="{{ route('foire.show',['boutique'=>$market->nom_boutique]) }}" class="btn btn-xs btn-danger">Visitez la boutique</a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+
                             @endforeach
+                            </div>
                         </div>
                       </div>
                 </div>

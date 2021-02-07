@@ -29,7 +29,7 @@ class BoutiqueController extends ClientController
         $boutiques = Boutique::where('account_id','=',$account_id)->first();
         //dd($boutiques);
 
-        if ($boutiques->count() !==0 ) {
+        if ($boutiques) {
 
             $products = $this->getProducts($account_id);
             return view('espace_client.market.index')->with([

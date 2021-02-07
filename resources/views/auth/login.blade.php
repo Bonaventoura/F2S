@@ -76,7 +76,7 @@
                 <a href="forgot-password.html">Mot de passe oublié</a>
             </p>
             <p class="mb-0">
-                <a href="register.html" class="text-center">Vous n'avez pas de compte ? créez en un</a>
+                <a href="{{ route('compte.create') }}" class="text-center">Vous n'avez pas de compte ? créez en un</a>
             </p>
         </div>
         <!-- /.login-card-body -->

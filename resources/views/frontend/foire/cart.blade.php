@@ -102,14 +102,14 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Sub Total: <b class="pull-right">{{ number_format(\Cart::getTotal()) }} XOF</b></li>
                         <hr>
-                        <li class="list-group-item">TVA: <b class="pull-right">0.15%</b></li>
+                        <li class="list-group-item">TVA: <b class="pull-right">15%</b></li>
                         <hr>
-                        <li class="list-group-item">Total : <b class="pull-right"> {{ number_format(\Cart::getTotal() + (\Cart::getTotal()*0.0015) ) }} XOF</b></li>
+                        <li class="list-group-item">Total : <b class="pull-right"> {{ number_format(\Cart::getTotal() + (\Cart::getTotal()*0.15) ) }} XOF</b></li>
                     </ul>
                 </div>
-                <br><a href="#" class="btn btn-dark">Continuer le Shopping</a>
+                <br><a href="Javascript:history.back()" class="btn btn-dark">Continuer le Shopping</a>
                 @if (count($items)>0)
-                <a href="#" class="btn btn-success">Procceder au paiement</a>
+                <a href="{{ route('foire.checkout') }}" class="btn btn-success">Passer la commande</a>
                 @endif
             </div>
         </div>

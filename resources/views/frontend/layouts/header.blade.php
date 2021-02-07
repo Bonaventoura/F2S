@@ -25,9 +25,9 @@
                             ?></b>
                         </div>
 
-                        <div class="top_bar_content ml-auto">
-                            <div class="main_menu_phone"><img src="{{ asset('images/phone-call.svg') }}" alt=""><span>+825 25 800 800</span></div>
-                            <div class="main_menu_email"><img src="{{ asset('images/envelope.svg') }}" alt=""><span>office@invest.com</span></div>
+                        <div class="top_bar_content ml-auto text-dark">
+                            <div class="main_menu_phone"><img src="{{ asset('images/phone-call.svg') }}" alt=""><span>(+228) 92 55 68 92 </span></div>
+                            <div class="main_menu_email"><img src="{{ asset('images/envelope.svg') }}" alt=""><span>info@f2s.com</span></div>
 
                         </div>
                         <div class="burger">
@@ -49,9 +49,22 @@
                             <ul class="main_menu_list">
                                 <li class="active hassubs"><a href="{{ route('welcome') }}">Accueil</a></li>
                                 <li><a href="about.html">A Propos </a></li>
-                                <li class="hassubs"><a href="services.html">services</a></li>
+                                <li class="hassubs"><a href="{{ route('services') }}">services</a></li>
+
+
+                                <li class="hassubs">
+                                    <a href="#">Financial</a>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Financer F2S</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Financez START-UP</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
                                 <li><a class="" href="{{ route('foire.online') }}">Foire </a></li>
-                                <li><a class="" href="{{ route('shopping') }}">Projets </a></li>
                                 <li><a href="news.html">blog</a></li>
                                 <li><a href="contact.html">contact</a></li>
                             </ul>
@@ -79,7 +92,7 @@
                                         <span class="fa fa-user"></span>Login
                                     </a>
                                 </div>
-                                
+
                                 @if (Route::has('register'))
                                     <div class="register">
                                         <a href="{{ route('compte.create') }}" class="btn btn-xs btn-success">
@@ -98,20 +111,7 @@
                                     </span>
                                     <div class="dropdown-menu dropdown-menu-right">
 
-                                        @if ($exist == 1)
                                         <a class="dropdown-item" href="{{ route('espace.client') }}">Dashbord</a>
-                                        {{--@if ($market ==0)
-                                        <a class="dropdown-item" href="{{ route('boutiques.create') }}">Créer Boutique</a>
-                                        @endif--}}
-
-                                        {{--Afficher activer compte si le compte est inactif sinon ne rien afficher --}}
-
-                                        @if ($statut == 0)
-                                            <a class="dropdown-item" href="{{ route('activer.account') }}">Activer Compte</a>
-                                        @endif
-
-                                        {{--fin si  --}}
-                                        @endif
 
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>

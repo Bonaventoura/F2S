@@ -41,9 +41,9 @@ class CompteController extends Controller
 
             $pseudo_parrain = $this->getPseudo($lien);
 
-            return view('compte.create')->with('pseudo_parrain',$pseudo_parrain);
+            return view('frontend.compte.create')->with('pseudo_parrain',$pseudo_parrain);
         }else {
-            return view('compte.create');
+            return view('frontend.compte.create');
         }
 
 
@@ -61,14 +61,9 @@ class CompteController extends Controller
         $this->validate($request,[
             'nom'=>'required',
             'prenoms'=>'required',
-            'sexe'=>'required',
-            'date_n'=>'required',
-            'num_tel'=>'required',
             'email'=>'required|',
             'pseudo'=>'required',
             'password'=>'required',
-            'pays'=>'required',
-            'ville'=>'required',
         ]);
 
         $password = Hash::make($request->password);
@@ -235,7 +230,7 @@ class CompteController extends Controller
             $account->num_tel = $request->num_tel;
             $account->email = $request->email;
             $account->pseudo = $request->pseudo;
-            $account->password = $password;
+            $account->password = $request->password;
             $account->code = $code;
 
             $code_filleul = $this->getLastId() ;
@@ -268,7 +263,7 @@ class CompteController extends Controller
 
                 $solde->montant_actuel = 0;
 
-                dd($solde);
+                //dd($solde);
 
                 $parrain = $this->parrain($request->pseudo_parrain);
 
@@ -348,12 +343,7 @@ class CompteController extends Controller
 
         }
 
-
-
-
-
         //la dernière personne qui vient de s'inscrire est le filleul
-
 
         $email = $request->email;
         //Mail::to($email)->send(new WelcomeUserMail());

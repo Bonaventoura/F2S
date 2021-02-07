@@ -456,7 +456,7 @@ section
 
 .top_bar
 {
-	background: #11100e;
+	background: #FFFFFF;
 }
 .top_bar_container
 {
@@ -510,7 +510,8 @@ section
 	-moz-transform: translateY(3px);
 	-ms-transform: translateY(3px);
 	-o-transform: translateY(3px);
-	transform: translateY(3px);
+    transform: translateY(3px);
+    text-decoration-color: #000;
 }
 .top_bar_content > div
 {
@@ -526,7 +527,7 @@ section
 {
 	font-family: 'gill', sans-serif;
 	font-size: 14px;
-	color: #ffa800;
+	color: #FFFFFF;
 	text-transform: uppercase;
 	-webkit-transition: all 200ms ease;
 	-moz-transition: all 200ms ease;
@@ -606,7 +607,7 @@ section
 .main_menu
 {
 	width: 100%;
-	background: #b3a07a;
+	background: #003679;
 }
 .main_menu_container
 {
