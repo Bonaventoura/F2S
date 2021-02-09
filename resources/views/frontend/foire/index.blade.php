@@ -24,26 +24,37 @@
                 @include('layouts.messages')
             </div>
 
-
-            @foreach ($boutiques as $market)
-            <!-- News Post -->
-            <div class="col-lg-4  ">
-                <div class="news_post">
-                    <div class="news_image ">
-                        <img src="/storage/avatars/{{$market->avatar}}" width="370"  alt="">
-                    </div>
-
-                    <div class="news_content " style="background-color: #003679">
-                        <div class="news_title text-white"> {{$market->nom_boutique}} </div>
-                        <div class="news_text mt-2">
-                            <p class="text-white">Domaine : Commerce</p>
-                        </div>
-                        <a href="{{ route('foire.show',['boutique'=>$market->nom_boutique]) }}" class="btn btn-xs btn-danger">Visitez la boutique</a>
-                    </div>
-
-                </div>
+            <div class="col-lg-3 col-md-3" style="background-color: #22238b">
+                <h4>Catégories</h4>
             </div>
-            @endforeach
+
+            <div class="col-lg-9 col-md-9">
+
+                <div class="row">
+                    @foreach ($boutiques as $market)
+                    <!-- News Post -->
+                    <div class="col-lg-4  ">
+                        <div class="news_post">
+                            <div class="news_image ">
+                                <img src="/storage/avatars/{{$market->avatar}}" width="370"  alt="">
+                            </div>
+
+                            <div class="news_content " style="background-color: #003679">
+                                <div class="news_title text-white"> {{$market->nom_boutique}} </div>
+                                <div class="news_text mt-2">
+                                    <p class="text-white">Domaine : Commerce</p>
+                                </div>
+                                <a href="{{ route('foire.show',['boutique'=>$market->nom_boutique]) }}" class="btn btn-xs btn-danger">Visitez la boutique</a>
+                            </div>
+
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+
+
+            </div>
+
 
         </div>
 

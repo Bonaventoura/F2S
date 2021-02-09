@@ -107,11 +107,20 @@
                                             <label for="ville">Ville</label>
                                         </div>
 
-                                        <div class="form-floating">
+                                        <div class="form-floating mb-3">
                                             <textarea class="form-control" placeholder="Veuillez nous décrire un peu votre situation géographique" name="situation_geo" id="situation_geo"></textarea>
                                             <label for="situation_geo">Veuillez nous décrire un peu votre situation géographique</label>
                                         </div>
-                                        
+
+                                        @foreach ($items as $item)
+                                        <div class="form-group">
+                                            <input type="text" name="name[]" id="" class="form-control form-control-sm" value=" {{$item->name}} ">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="quantity[]" id="" class="form-control form-control-sm" value=" {{$item->quantity}} ">
+                                        </div>
+                                        @endforeach
+
                                     </div>
                                 </div>
                             </form>
