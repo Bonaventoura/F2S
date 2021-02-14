@@ -2,27 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Account;
+use App\Models\Role;
 use Darryldecode\Cart\Cart;
+use App\Models\Foire\Client;
 use Illuminate\Http\Request;
 use App\Models\Client\Product;
 use App\Models\Client\Boutique;
-use App\Http\Controllers\EspaceClient\ClientController;
-use App\Models\Foire\Client;
-use App\Models\Role;
-use App\User;
+use App\Models\Client\Category;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Controllers\EspaceClient\ClientController;
 
 class FoireController extends FrontendController
 {
     public function index()
     {
         $boutiques = Boutique::orderBy('id','desc')->paginate(9);
-        //dd($boutiques);
-        //$data = $this->user_data();
+        $categories = Category::all();
         return view('frontend.foire.index')->with([
             'boutiques'=>$boutiques,
+            'categories'=>$categories
         ]);
     }
 
@@ -171,5 +172,36 @@ class FoireController extends FrontendController
         return redirect()->back();
 
     }
+
+
+    /**
+     * @return category_id
+     */
+    public function getCategory($name)
+    {
+        $req = Category::where('name',$name)->get();
+
+        foreach ($req as $key => $value) {
+            return $value->id;
+        }
+    }
+
+    /**
+     * @return products
+     */
+    public function category($name)
+    {
+        $cat_id = $this->getCategory($name);
+
+        $products = Product::where('category_id',$cat_id)->get();
+
+        return view('frontend.foire.search-product')->with([
+            'products'=>$products,
+            'data'=>$name,
+        ]);
+
+    }
+
+
 
 }

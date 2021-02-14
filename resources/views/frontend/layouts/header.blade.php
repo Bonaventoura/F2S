@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="top_bar_content ml-auto text-dark">
-                            <div class="main_menu_phone"><img src="{{ asset('images/phone-call.svg') }}" alt=""><span>(+228) 92 55 68 92 </span></div>
+                            <div class="main_menu_phone"><img src="{{ asset('images/phone-call.svg') }}" alt=""><span><strong>(+228) 92 55 68 92</strong>  </span></div>
                             <div class="main_menu_email"><img src="{{ asset('images/envelope.svg') }}" alt=""><span>info@f2s.com</span></div>
 
                         </div>
@@ -112,6 +112,8 @@
                                     <div class="dropdown-menu dropdown-menu-right">
 
                                         <a class="dropdown-item" href="{{ route('espace.client') }}">Dashbord</a>
+
+                                        <a class="dropdown-item" href="{{ route('mes-commandes') }}">Mes Commandes</a>
 
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>

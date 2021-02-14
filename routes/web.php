@@ -36,6 +36,8 @@ Route::get('foire/boutique/{boutique}','FoireController@show')->name('foire.show
 
 Route::get('foire/recherche','FoireController@search')->name('foire.search');
 
+Route::get('/foire/rechercher/categorie/{name}','FoireController@category')->name('foire.category');
+
 Route::get('foire/cart','CartController@cart')->name('cart');
 
 Route::post('/add','CartController@add')->name('cart.add');
@@ -49,6 +51,12 @@ Route::post('/clear', 'CartController@clear')->name('cart.clear');
 //Route::get('foire/checkout','FoireController@checkout')->name('foire.checkout');
 
 Route::get('foire/commande','CheckoutController@index')->name('foire.checkout');
+
+Route::post('/foire/passer-commande','CheckoutController@passer_commande')->name('foire.order');
+
+Route::get('/foire/mes-commandes','CheckoutController@orders')->name('mes-commandes');
+
+Route::get('/foire/mes-commandes/detail/{order}','CheckoutController@detail_order')->name('detail-order');
 
 Route::post('foire/register','FoireController@register')->name('foire.register');
 

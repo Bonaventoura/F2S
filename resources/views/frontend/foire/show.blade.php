@@ -72,8 +72,8 @@
                           <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Market</a>
                           <a class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Autre boutiques</a>
                         </div>
-                      </nav>
-                      <div class="tab-content" id="nav-tabContent">
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
                             <div class="row">
@@ -175,7 +175,7 @@
                             @endforeach
                             </div>
                         </div>
-                      </div>
+                    </div>
                 </div>
             </div>
         </div>

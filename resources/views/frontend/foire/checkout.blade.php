@@ -66,7 +66,8 @@
                             <h4 class="text-white">Enregistrer ma commande</h4>
                         </div>
                         <div class="card-body">
-                            <form action="">
+                            <form action="{{ route('foire.order') }}" method="POST">
+                                @csrf
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <p>Identité</p>
@@ -112,15 +113,7 @@
                                             <label for="situation_geo">Veuillez nous décrire un peu votre situation géographique</label>
                                         </div>
 
-                                        @foreach ($items as $item)
-                                        <div class="form-group">
-                                            <input type="text" name="name[]" id="" class="form-control form-control-sm" value=" {{$item->name}} ">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" name="quantity[]" id="" class="form-control form-control-sm" value=" {{$item->quantity}} ">
-                                        </div>
-                                        @endforeach
-
+                                        <button class="btn btn-md btn-success"><i class="fa"></i>Envoyer</button>
                                     </div>
                                 </div>
                             </form>
