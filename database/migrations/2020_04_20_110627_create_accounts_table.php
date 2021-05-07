@@ -15,19 +15,19 @@ class CreateAccountsTable extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nom')->unique();
+            $table->string('nom');
             $table->string('prenoms');
-            $table->string('sexe');
-            $table->string('pays')->nullable();
+            $table->string('sexe')->nullable();
+            $table->string('pays_id')->nullable();
             $table->string('ville')->nullable();
-            $table->date('date_n');
+            $table->date('date_n')->nullable();
             $table->integer('num_tel');
             $table->string('email');
             $table->string('pseudo')->unique();
             $table->string('password');
             $table->boolean('actif')->default(0);
             $table->string('code')->unique();
-            $table->string('photo_profil');
+            $table->string('photo_profil')->nullable();
             $table->timestamps();
         });
     }

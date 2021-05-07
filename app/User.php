@@ -57,7 +57,7 @@ class User extends Authenticatable
      */
     public function client_startup()
     {
-        return $this->roles()->where('name','client_f2s')->first();
+        return $this->roles()->where('name','=','client_f2s')->first();
     }
 
     /**
@@ -66,5 +66,13 @@ class User extends Authenticatable
     public function client_foire(array $roles)
     {
         return $this->roles()->whereIn('name',$roles)->first();
+    }
+
+    /**
+     * @return account_client 
+     */
+    public function account()
+    {
+        return $this->belongsTo(Account::class);
     }
 }

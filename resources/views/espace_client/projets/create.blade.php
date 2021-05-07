@@ -34,17 +34,11 @@
                     </div>
 
                     <div class="form-group">
-                        <strong><label for="domaine">Dans quelle domaine d'activité se situe votre projet ?</label></strong>
-                        <select name="domaine" id="domaine" class="form-control form-control-sm">
-                            <option value="agro">Agro</option>
-                            <option value="industrie">Industrie(PMI)</option>
-                            <option value="exportateur">Exportateur de produits de rente brut(PME)</option>
-                            <option value="commerce_gros">Commerce de gros import-export</option>
-                            <option value="commerce_demis">Commerce demis gros</option>
-                            <option value="commerce_detail">Commerce Details</option>
-                            <option value="artisanat">Artisanat</option>
-                            <option value="technologie">Technologie</option>
-                            <option value="autres">Autres produits et services</option>
+                        <strong><label for="domaine_id">Dans quelle domaine_id d'activité se situe votre projet ?</label></strong>
+                        <select name="domaine_id" id="domaine_id" class="form-control form-control-sm">
+                            @foreach ($domaines as $item)
+                                <option value="{{$item->id}}">{{$item->nom}}</option>
+                            @endforeach
                         </select>
                     </div>
 

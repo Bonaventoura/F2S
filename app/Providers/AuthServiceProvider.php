@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->isAdmin();
         });
 
-        Gate::define('client_f2s', function ( $user) {
+        Gate::define('espace-client', function ( $user) {
             return $user->client_startup();
         });
 

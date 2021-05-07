@@ -15,7 +15,7 @@ class ValidationController extends Controller
      */
     public function index()
     {
-        $projets = Projet::orderBy('id','desc')->paginate(12);
+        $projets = Projet::where('edited_at','=',1)->orderBy('id','desc')->paginate(12);
         $carnevas = Carneva::orderBy('id','desc')->paginate(12);
         $confirmations = Confirmation::orderBy('id','desc')->paginate(12);
         return view('espace-admin.clients.projets.index')->with([

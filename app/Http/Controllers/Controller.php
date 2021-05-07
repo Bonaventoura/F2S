@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Account;
 use App\Filleul;
+use App\Models\Role;
 use App\Models\Solde;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Exists;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rules\Exists;
 
 class Controller extends BaseController
 {
@@ -60,6 +61,9 @@ class Controller extends BaseController
         }
     }
 
+    /**
+     * @return email
+     */
     public function getEmail($pseudo)
     {
         $accounts = DB::table('accounts')->select('*')
@@ -71,6 +75,9 @@ class Controller extends BaseController
         }
     }
 
+    /**
+     * @return pseudo 
+     */
     public function pseudo($code_parrain)
     {
         $accounts = DB::table('accounts')->select('*')
@@ -273,10 +280,10 @@ class Controller extends BaseController
     public function getGeneration($code_filleul)
     {
         $results = DB::table('accounts')
-                                ->join('filleuls','filleuls.code_filleuls','accounts.id')
-                                ->select('accounts.*')
-                                ->where('filleuls.code_filleuls','=',$code_filleul)
-                                ->get();
+                ->join('filleuls','filleuls.code_filleuls','accounts.id')
+                ->select('accounts.*')
+                ->where('filleuls.code_filleuls','=',$code_filleul)
+                ->get();
 
         return $results;
     }
@@ -643,6 +650,18 @@ class Controller extends BaseController
             return $msg=1;
         } else {
             return $msg =0;
+        }
+    }
+
+    /**
+     * @return role_id
+     * role = client_f2s
+     */
+    public function user_role()
+    {
+        $role = Role::select('id')->where('name','=','client_f2s')->get();
+        foreach ($role as $key => $value) {
+            return $value->id;
         }
     }
 

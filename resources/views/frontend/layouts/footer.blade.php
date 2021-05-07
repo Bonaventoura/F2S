@@ -8,7 +8,7 @@
                     <div class="logo_container footer_logo">
                         <div class="logo">
                             <a href="#">
-                                <div class="logo_line_1"><span>F2S</span>vest</div>
+                                <div class="logo_line_1"><span>F2S</span></div>
                                 <div class="logo_line_2">Fonds Solidarité Start-Up</div>
                                 <div class="logo_img"><img src="{{ asset('images/logo_f2s.png') }}" width="100" alt=""></div>
                             </a>

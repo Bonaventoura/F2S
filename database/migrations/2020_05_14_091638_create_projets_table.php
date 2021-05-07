@@ -17,7 +17,7 @@ class CreateProjetsTable extends Migration
 
             $table->bigIncrements('id');
             //informations de compte
-            $table->integer('accounts_id'); //references table accounts on accounts.id = projets.accounts_id
+            $table->integer('account_id'); //references table accounts on accounts.id = projets.accounts_id
             //Quartier
 
             //informations sur le projet

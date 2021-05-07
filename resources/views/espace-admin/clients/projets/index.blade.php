@@ -62,19 +62,16 @@
                         <td> {{$projet->account->nom}} </td>
                         <td> {{$projet->cout_projet}}</td>
                         <td class="project-state">
-                            <span class="badge badge-success">Success</span>
+                            @if ($projet->status == 1)
+                                <span class="badge badge-success">Validé</span>
+                            @else
+                                <span class="badge badge-pill badge-warning">Non validé</span>
+                            @endif
+                            
                         </td>
                         <td class="project-actions text-right">
                             <a class="btn btn-primary btn-sm" href="{{ route('validations.detail-projet',['projet'=>$projet->id] ) }}">
                                 <i class="fas fa-folder">
-                                </i>
-                            </a>
-                            <a class="btn btn-info btn-sm" href="#">
-                                <i class="fas fa-pencil-alt">
-                                </i>
-                            </a>
-                            <a class="btn btn-danger btn-sm" href="#">
-                                <i class="fas fa-trash">
                                 </i>
                             </a>
                         </td>

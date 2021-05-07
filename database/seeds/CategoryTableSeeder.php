@@ -31,6 +31,10 @@ class CategoryTableSeeder extends Seeder
         Category::create([
             'name'=>"Vestimentaire"
         ]);
+
+        Category::create([
+            'name'=>'Alimentaire'
+        ]);
         
     }
 }

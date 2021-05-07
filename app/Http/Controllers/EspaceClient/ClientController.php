@@ -11,7 +11,9 @@ use App\Models\Client\Boutique;
 use Illuminate\Support\Facades\DB;
 use App\Models\Client\Confirmation;
 use App\Http\Controllers\Controller;
+use App\Models\Client\Calendar;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
 class ClientController extends Controller
@@ -33,6 +35,11 @@ class ClientController extends Controller
 
     public function index()
     {
+        if (Gate::denies('espace-client')) {
+            return redirect()->back();
+        }
+
+        
         $user = $this->user();
         $lien ="http://localhost:8000/compte/create/". $this->get_lien($user);
         return view('espace_client.index')->with([
@@ -154,27 +161,53 @@ class ClientController extends Controller
 
     public function upload_file(Request $request)
     {
-        if ($request->hasFile('calendrier')) {
-            $calendrier = $request->calendrier->getClientOriginalName();
-            //dd($calendrier);
-            $request->calendrier->storeAs(public_path('/storage/carneva/'.$calendrier));
+        
+        if ($request->hasFile('fichier')) {
+            $fichier = $request->fichier->getClientOriginalName();
+            //dd($fichier);
+            $request->fichier->storeAs(public_path('/files/carnevas/'),$fichier);
 
             $data = [
                 'projet_id'=>$request->projet_id,
-                'calendrier'=>$calendrier
+                'fichier'=>$fichier
             ];
 
             Carneva::create($data);
 
-            $response = ['success'=>"votre carneva a été uploader avec succès"];
+            //$response = ['success'=>"votre carneva a été uploader avec succès"];
         }
 
-        return response()->json($response,200);
+        session()->flash('success',"Le carnevas du projet a été chargé avec succès");
+        return redirect()->back();
+    }
+
+    /**
+     * uploader la fiche de confirmation de projet
+     */
+    public function upload_calendar(Request $request)
+    {
+        if ($request->hasFile('calendar')) {
+            $calendar = $request->calendar->getClientOriginalName();
+            //dd($fichier);
+            $request->calendar->storeAs(public_path('/files/calendars/'),$calendar);
+
+            $data = [
+                'projet_id'=>$request->projet_id,
+                'fichier'=>$calendar
+            ];
+
+            Calendar::create($data);
+
+            //$response = ['success'=>"votre carneva a été uploader avec succès"];
+        }
+
+        session()->flash('success',"Le calendrier de réalisation et de confirmation du projet a été chargé avec succès");
+        return redirect()->back();
     }
 
     public function telecharger()
     {
-        $file = public_path().'/files/carneva-fr.xls';
+        $file = public_path().'/files/carneva_fr.xls';
         //dd($file);
         $headers = [
             'Content-Type: application/xls',
@@ -188,29 +221,22 @@ class ClientController extends Controller
     public function confirmation(Request $request)
     {
         $response = [];
-        if ($request->hasFile('calendrier')) {
-            $calendrier = $request->calendrier->getClientOriginalName();
-            //dd($calendrier);
-            $request->calendrier->storeAs(public_path('/storage/calendrier/'.$calendrier));
+        $data = [
+            'projet_id'=>$request->projet_id,
+            'nom_parrain'=>$request->nom_parrain,
+            'prenoms_parrain'=>$request->prenoms_parrain,
+            'fonction'=>$request->fonction,
+            'email_address'=>$request->eamil_address,
+            'telephone'=>$request->telephone,
+        ];
 
-            $data = [
-                'projet_id'=>$request->projet_id,
-                'nom_parrain'=>$request->nom_parrain,
-                'prenoms_parrain'=>$request->prenoms_parrain,
-                'fonction'=>$request->fonction,
-                'email_address'=>$request->eamil_address,
-                'telephone'=>$request->telephone,
-                'calendrier'=>$calendrier
-            ];
+        Confirmation::create($data);
 
-            Confirmation::create($data);
+        $this->update_projet($request->projet_id);
 
-            $this->update_projet($request->projet_id);
-
-            $response = ['success'=>"votre confirmation du projet a été envoyé avec succès"];
-        }else {
-            $response = ['error'=>"Echec d'envoie de la confirmation"];
-        }
+        $response = [
+            'success'=>"votre confirmation du projet a été envoyé avec succès"
+        ];
 
         return response()->json($response,200);
 
@@ -221,6 +247,56 @@ class ClientController extends Controller
         $up = Projet::where('id','=',$projet_id)->update(['confirm_at'=>1]);
         return $up;
     }
+
+    public function submit_projet($projet_id)
+    {
+        $projet = Projet::where('id','=',$projet_id)->update([
+            'edited_at'=>1
+        ]);
+        session()->flash('sucess',"Le projet a été soumis pour évaluation avec succès, consultez le pour la finalisation");
+        return redirect()->route('projets.index');
+    }
+
+    public function verif_carneva($projet_id)
+    {
+        $res = Carneva::where('projet_id','=',$projet_id)->first();
+        
+        if ($res) {
+            return 1;
+        } else {
+            return 0;
+        } 
+    }
+
+    /**
+     * 
+     */
+    public function verif_calendar($projet_id)
+    {
+        $res = Calendar::where('projet_id','=',$projet_id)->first();
+        
+        if ($res) {
+            return 1;
+        } else {
+            return 0;
+        } 
+    }
+
+    public function confirm_at($projet_id)
+    {
+        $res = Projet::where('id',$projet_id)->where('confirm_at','=',1)->get('confirm_at');
+
+        if ($res) {
+            return 1;
+        } else {
+            return 0;
+        }
+        
+    }
+
+
+
+
 
 
 }

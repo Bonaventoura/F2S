@@ -10,6 +10,7 @@ use App\Models\Solde;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\WelcomeUserMail;
+use App\Models\Pays;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -35,15 +36,21 @@ class CompteController extends Controller
     public function create()
     {
 
+        $pays = Pays::all();
         if (request('lien')) {
 
             $lien = request('lien');
 
             $pseudo_parrain = $this->getPseudo($lien);
 
-            return view('frontend.compte.create')->with('pseudo_parrain',$pseudo_parrain);
+            return view('frontend.compte.create')->with([
+                'pseudo_parrain'=>$pseudo_parrain,
+                'pays'=>$pays
+            ]);
         }else {
-            return view('frontend.compte.create');
+            return view('frontend.compte.create')->with([
+                'pays'=>$pays
+            ]);
         }
 
 
@@ -67,281 +74,142 @@ class CompteController extends Controller
         ]);
 
         $password = Hash::make($request->password);
-
-        //dd($password);
         $random = rand(1000,1000000);
-
         $code = rand(1000,1000000);
-
         $pseudo_parrain = $request->pseudo_parrain;
 
         $account = new Account;
 
-        /**
-         * la photo de profile
-         */
         if ($request->hasFile('photo_profil')) {
 
             $photo_profil = $request->photo_profil->getClientOriginalName();
-
-            $img = Image::make(request()->file('photo_profil'))->fit(90,70)->save(public_path('/storage/profil/'.$photo_profil),80,'jpg');
-
-            //dd($photo_profil);
-            //$request->photo_profil->storeAs('public/profil',$photo_profil);
-
-            $account->nom = $request->nom;
-            $account->prenoms = $request->prenoms;
-            $account->sexe = $request->sexe;
-            $account->pays = $request->pays;
-            $account->ville = $request->ville;
-            $account->date_n = $request->date_n;
-            $account->num_tel = $request->num_tel;
-            $account->email = $request->email;
-            $account->pseudo = $request->pseudo;
-            $account->password = $request->password;
-            $account->code = $code;
+            $img = Image::make(request()->file('photo_profil'))->save(public_path('/storage/profil/'.$photo_profil));
             $account->photo_profil = $photo_profil;
+        }
 
+        //Création du compte
+        $account->nom = $request->nom;
+        $account->prenoms = $request->prenoms;
+        $account->sexe = $request->sexe;
+        $account->pays_id = $request->pays_id;
+        $account->ville = $request->ville;
+        $account->date_n = $request->date_n;
+        $account->num_tel = $request->num_tel;
+        $account->email = $request->email;
+        $account->pseudo = $request->pseudo;
+        $account->password = $request->password;
+        $account->code = $code;
 
-            /**
-             * le pseudo du parrain existe, donc c'est un parrainage
-             */
-            if (isset($pseudo_parrain)) {
+        //Création de l'utilisateur
+        $user = new User;
 
-                $code_parrain = $this->getCodeParrain($pseudo_parrain);
+        $user->name = $request->nom;
+        $user->username = $request->pseudo;
+        $user->email = $request->email;
+        $user->password = $password;
 
-                $code_filleul = $this->getLastId() ;
+        /**
+        * le pseudo du parrain existe, donc c'est un parrainage
+        */
+        if (isset($pseudo_parrain)) {
 
-                //sauvegarder le filleul
-
-                $filleul = new Filleul;
-
-                $filleul->code_filleuls = $code_filleul;
-                $filleul->code_parrain = $code_parrain;
-                $filleul->pseudo_parrain = $this->pseudo($code_parrain);
-
-                $user = new User;
-
-                $user->name = $request->nom;
-                $user->username = $request->pseudo;
-                $user->email = $request->email;
-                $user->password = $password;
-
-                /*niveau
-                $niveau = new Niveau;
-
-                $niveau->code_parrain= $code; */
-
-                $solde = new Solde;
-
-                $solde->account_id = $this->getLastId();
-
-                $solde->niveau_id = 1;
-
-                $solde->montant_actuel = 0;
-
-                //dd($solde);
-
-                $parrain = $this->parrain($request->pseudo_parrain);
-
-                $parrainage = $this->parrainer($code_parrain);
-
-                if($parrain){
-
-                    if ($parrainage) {
-
-                        session()->flash('error',"le parrain $pseudo_parrain a déjà parrainer 3 personnes");
-
-                        return redirect()->back();
-                    } else {
-
-                        $account->save();
-
-                        $user->save();
-
-                        $filleul->save();
-
-                        $solde->save();
-
-                        session()->flash('success','Votre compte a été crée avec succès, veuillez vous connectez pour valider le compte');
-
-                        return redirect()->back();
-                    }
-
-                }else{
-                    session()->flash('error',"le pseudo du parrain $pseudo_parrain n'existe pas ou n'est pas valide");
-
-                    return redirect()->back();
-                }
-
-            } else {
-
-                $code_parrain = $code;
-
-                $filleul = new Filleul;
-
-                $filleul->code_filleuls = $code;
-                $filleul->code_parrain = $code_parrain;
-                $filleul->pseudo_parrain = $request->pseudo;
-
-                //dd($filleul);
-
-                //create user account
-                $user = new User;
-
-                $user->name = $request->nom;
-                $user->username = $request->pseudo;
-                $user->email = $request->email;
-                $user->password = $password;
-
-                 //solde
-                $solde = new Solde;
-
-                $solde->account_id = $this->getLastId();;
-
-                $solde->niveau_id = 1;
-
-                $solde->montant_actuel = 0;
-
-                //dd($solde);
-
-                $account->save();
-
-                $user->save();
-
-                $filleul->save();
-
-                $solde->save();
-
-                session()->flash('success','Votre compte a été crée avec succès, veuillez vous connectez pour valider le compte');
-
-                return redirect()->back();
-
-            }
-
-        }else {
-
-            $account->nom = $request->nom;
-            $account->prenoms = $request->prenoms;
-            $account->sexe = $request->sexe;
-            $account->pays = $request->pays;
-            $account->ville = $request->ville;
-            $account->date_n = $request->date_n;
-            $account->num_tel = $request->num_tel;
-            $account->email = $request->email;
-            $account->pseudo = $request->pseudo;
-            $account->password = $request->password;
-            $account->code = $code;
+            $code_parrain = $this->getCodeParrain($pseudo_parrain);
 
             $code_filleul = $this->getLastId() ;
 
-            if (isset($pseudo_parrain)) {
+            //sauvegarder le filleul
 
-                $code_parrain = $this->getCodeParrain($pseudo_parrain);
+            $filleul = new Filleul;
 
-                //sauvegarder le filleul
+            $filleul->code_filleuls = $code_filleul;
+            $filleul->code_parrain = $code_parrain;
+            $filleul->pseudo_parrain = $this->pseudo($code_parrain);
 
-                $filleul = new Filleul;
+            
 
-                $filleul->code_filleuls = $code_filleul;
-                $filleul->code_parrain = $code_parrain;
-                $filleul->pseudo_parrain = $this->pseudo($code_parrain);
+            /*niveau
+            $niveau = new Niveau;
 
-                $user = new User;
+            $niveau->code_parrain= $code; */
 
-                $user->name = $request->nom;
-                $user->username = $request->pseudo;
-                $user->email = $request->email;
-                $user->password = $password;
+            $solde = new Solde;
 
-                //solde
-                $solde = new Solde;
+            $solde->account_id = $this->getLastId();
 
-                $solde->account_id = $this->getLastId();;
+            $solde->niveau_id = 1;
 
-                $solde->niveau_id = 1;
+            $solde->montant_actuel = 0;
 
-                $solde->montant_actuel = 0;
+            //dd($solde);
 
-                //dd($solde);
+            $parrain = $this->parrain($request->pseudo_parrain);
 
-                $parrain = $this->parrain($request->pseudo_parrain);
+            $parrainage = $this->parrainer($code_parrain);
 
-                $parrainage = $this->parrainer($code_parrain);
+            if($parrain){
 
-                if($parrain){
+                if ($parrainage) {
 
-                    if ($parrainage) {
+                    session()->flash('error',"le parrain $pseudo_parrain a déjà parrainer 3 personnes");
 
-                        session()->flash('error',"le parrain $pseudo_parrain a déjà parrainer 3 personnes");
+                    return redirect()->back();
+                } else {
 
-                        return redirect()->back();
-                    } else {
+                    $account->save();
+                    $filleul->save();
+                    $solde->save();
+                    $role_id = $this->user_role();
+                    //dd($role);
+                    $user->save();
+                    $user->roles()->attach($role_id);
 
-                        $account->save();
-
-                        $user->save();
-
-                        $filleul->save();
-
-                        $solde->save();
-
-                        session()->flash('success','Votre compte a été crée avec succès, veuillez vous connectez pour valider le compte');
-
-                        return redirect()->back();
-                    }
-
-                }else{
-                    session()->flash('error',"le pseudo parrain $pseudo_parrain n'existe pas");
-
+                    session()->flash('success','Votre compte a été crée avec succès, veuillez vous connectez pour valider le compte');
                     return redirect()->back();
                 }
 
-            } else {
-
-                $code_parrain = $code;
-
-                $filleul = new Filleul;
-
-                $filleul->code_filleuls = $code_filleul;
-                $filleul->code_parrain = $code_parrain;
-                $filleul->pseudo_parrain = $request->pseudo;
-
-                //create user account
-                $user = new User;
-
-                $user->name = $request->nom;
-                $user->username = $request->pseudo;
-                $user->email = $request->email;
-                $user->password = $password;
-
-                 //niveau
-                $solde = new Solde;
-
-                $solde->account_id = $this->getLastId();
-
-                $solde->niveau_id = 1;
-
-                $solde->montant_actuel = 0;
-
-                //dd($solde);
-
-                $account->save();
-
-                $user->save();
-
-                $filleul->save();
-
-                $solde->save();
-
-                session()->flash('success','Votre compte a été crée avec succès, veuillez vous connectez pour valider le compte');
-
+            }else{
+                session()->flash('error',"le pseudo du parrain $pseudo_parrain n'existe pas ou n'est pas valide");
                 return redirect()->back();
-
             }
 
+        } else {
+
+            $code_parrain = $code;
+
+            $filleul = new Filleul;
+
+            $filleul->code_filleuls = $code;
+            $filleul->code_parrain = $code_parrain;
+            $filleul->pseudo_parrain = $request->pseudo;
+
+            //dd($filleul);
+
+             //solde
+            $solde = new Solde;
+
+            $solde->account_id = $this->getLastId();;
+
+            $solde->niveau_id = 1;
+
+            $solde->montant_actuel = 0;
+
+            //dd($solde);
+
+            $account->save();
+            $filleul->save();
+            $solde->save();
+            $role_id = $this->user_role();
+            //dd($role);
+            $user->save();
+            $user->roles()->attach($role_id);
+
+
+            session()->flash('success','Votre compte a été crée avec succès, veuillez vous connectez pour valider le compte');
+
+            return redirect()->back();
 
         }
+
 
         //la dernière personne qui vient de s'inscrire est le filleul
 

@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Projects</h3>
-
+            @include('layouts.messages')
             <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                 <i class="fas fa-minus"></i>
@@ -20,21 +20,25 @@
                 <thead>
                     <tr>
                         <th style="width: 1%">
-                            #
+                            N°
                         </th>
                         <th style="width: 20%">
-                            Nom Projet
+                            Nom du Projet
                         </th>
                         <th style="width: 30%">
                             Domaine
                         </th>
-                        <th>
+                        <th style="width: 30%">
                             Coût
                         </th>
-                        <th style="width: 8%" class="text-center">
+                        <th style="width: %" class="text-center">
                             Status
                         </th>
-                        <th style="width: 20%">
+                        <th>
+                            Soumettre
+                        </th>
+                        <th style="width: 20%" class="text-center">
+                            Actions
                         </th>
                     </tr>
                 </thead>
@@ -57,7 +61,7 @@
                             </small>
                         </td>
                         <td>
-                            {{$projet->domaine}}
+                            {{$projet->domaine->nom}}
                         </td>
 
                         <td class="project_progress">
@@ -72,19 +76,33 @@
                             @endif
                         </td>
 
+                        <td>
+                            @if ($projet->edited_at == 0)
+                                <form action="{{ route('projet.submit',['projet'=>$projet->id]) }}" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-success">
+                                        <i>soumettre</i>
+                                    </button>
+                                </form>
+                            @endif
+                        </td>
+
                         <td class="project-actions text-right">
-
-                            <a class="btn btn-primary btn-sm" href="{{ route('projets.show', $projet) }}">
-                                <i class="fas fa-folder"></i>
-                            </a>
-
-                            <a class="btn btn-info btn-sm" href="{{ route('projets.edit',$projet) }}">
-                                <i class="fas fa-pencil-alt"></i>
-                            </a>
-
-                            <a class="btn btn-danger btn-sm" href="{{ route('projets.destroy',$projet) }}">
-                                <i class="fas fa-trash"></i>
-                            </a>
+                            @if ($projet->edited_at == 1)
+                                <a class="btn btn-primary btn-sm" href="{{ route('projets.show', $projet) }}">
+                                    <i class="fas fa-folder"></i>
+                                </a>
+                            @else
+                                <a class="btn btn-info btn-sm" href="{{ route('projets.edit',$projet) }}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+    
+                                <a class="btn btn-danger btn-sm" href="{{ route('projets.destroy',$projet) }}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            @endif
+                            
+                            
                         </td>
                     </tr>
                     @endforeach

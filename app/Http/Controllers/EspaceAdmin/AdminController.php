@@ -3,16 +3,21 @@
 namespace App\Http\Controllers\EspaceAdmin;
 
 use App\Account;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Clubs\Club;
 use App\Models\Clubs\Groupe;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 class AdminController extends Controller
 {
     public function index()
     {
+        if (Gate::denies('admin')) {
+            return redirect()->back();
+        }
+
         return view('espace-admin.index');
     }
 

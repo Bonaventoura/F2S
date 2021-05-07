@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -45,5 +46,23 @@ class LoginController extends Controller
     public function username()
     {
         return 'username';
+    }
+
+    /**
+     * 
+     */
+    public function redirectTo()
+    {
+        $user = Auth::user();
+        if (Auth::user()->roles->pluck('name')->contains('admin')) {
+            return '/espace-admin';
+        }elseif (Auth::user()->roles->pluck('name')->contains('client_f2s')) {
+            //dd($user->roles->pluck('name'));
+            return '/espace-client';
+        }elseif (Auth::user()->roles->pluck('name')->contains('client_foire')) {
+            return '/';
+        }else {
+            return '/';
+        }
     }
 }

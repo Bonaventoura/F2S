@@ -126,6 +126,17 @@
                                             @endif
 
                                             <div class="form-group">
+                                                <label for="pays_id">Pays</label>
+                                                <select id="pays_id" class="form-control" name="pays_id">
+                                                    <option>Choisir votre pays</option>
+                                                    @foreach ($pays as $item)
+                                                    <option value="{{$item->id}}"> {{$item->nom_fr_fr}} </option>
+                                                    @endforeach
+                                                    
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
                                                 <label>Numéro de téléphone</label>
                                                 <input class="form-control form-control-sm" name="num_tel" id="num_tel" type="text" placeholder="Entrez votre mot de passe">
                                                 <span class="text-danger" id="error_num_tel"></span>

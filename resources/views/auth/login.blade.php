@@ -46,7 +46,7 @@
                     <span id="user"></span>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" id="password" name="password" disabled class="form-control" placeholder="Mot de passe">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-lock"></span>
@@ -65,7 +65,7 @@
                     </div>
                 <!-- /.col -->
                 <div class="col-6">
-                    <button type="submit" id="btn_login" class="btn btn-primary btn-block" disabled> <i class="fas fa-sign-in"></i> Connexion</button>
+                    <button type="submit" id="btn_login" class="btn btn-primary btn-block" > <i class="fas fa-sign-in"></i> Connexion</button>
                 </div>
                 <!-- /.col -->
                 </div>

@@ -148,11 +148,13 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::post('/projet/carneva','ClientController@upload_file')->name('carneva.upload');
 
+        Route::post('/projet/calendar','ClientController@upload_calendar')->name('calendar.upload');
+
         Route::get('/projet/carneva/dowload','ClientController@telecharger')->name('carneva.download');
 
         Route::post('/projet/confirmation','ClientController@confirmation')->name('confirmation');
 
-
+        Route::post('/projet/submit/{projet}','ClientController@submit_projet')->name('projet.submit');
 
     });
 });
